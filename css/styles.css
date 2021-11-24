@@ -1,0 +1,28 @@
+h2 {
+    text-align: center;
+    color: #03318C;
+    font-family: inherit !important;
+}
+
+body {
+    background-color: #023859!important;
+}
+
+.bg-personal {
+    background-color: #260E05;
+}
+
+.nav-link {
+    color: #F2F2F2;
+    font-family: inherit !important;
+}
+
+.container {
+    background-color: #F2F2F2;
+}
+
+.parrafo {
+    font-family: inherit !important;
+    text-align: center;
+    font-size: 1.5rem;
+}

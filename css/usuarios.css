@@ -1,0 +1,40 @@
+h5 {
+    font-family: inherit;
+}
+
+.modalheadertitle {
+    color: #260E05;
+}
+
+.btn-guardar {
+    color: #fff;
+    background-color: #260E05;
+    border-color: #260E05;
+}
+
+.card,
+.table {
+    background-color: #F2F2F2!important;
+}
+
+.card-header,
+.card-footer {
+    background-color: #40200E!important;
+}
+
+.modal-header,
+.modal-footer {
+    background-color: #F2C230!important;
+}
+
+.card-title {
+    font-family: inherit;
+    color: #28a745;
+    font-size: 2.5vh;
+}
+
+.links,
+.titlestable {
+    font-family: inherit;
+    color: #F2F2F2;
+}
