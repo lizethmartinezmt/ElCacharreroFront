@@ -8,15 +8,17 @@ window.onload = function() {
 };
 
 function campos_vacios() {
-    if ($.trim($("#emailRegistro").val()) == "" ||
-        $.trim($("#usuarioRegistro").val()) == "" ||
-        $.trim($("#contrasenaRegistro").val()) == "" ||
-        $.trim($("#contrasenaRegistro2").val()) == "" ||
-        $.trim($("#identificacion").val()) == "" ||
-        $.trim($("#direccion").val()) == "" ||
-        $.trim($("#celular").val()) == "" ||
-        $.trim($("#zona").val()) == "" ||
-        $.trim($("#tipo").val()) == "") {
+
+    if ($.trim($("#brandR").val()) == "" ||
+        $.trim($("#procesorR").val()) == "" ||
+        $.trim($("#osR").val()) == "" ||
+        $.trim($("#descriptionR").val()) == "" ||
+        $.trim($("#memoryR").val()) == "" ||
+        $.trim($("#hardDriveR").val()) == "" ||
+        $.trim($("#availabilityR").val()) == "" ||
+        $.trim($("#priceR").val()) == "" ||
+        $.trim($("#quantityR").val()) == "" ||
+        $.trim($("#photographyR").val()) == "") {
         return false;
     } else {
         return true;
@@ -57,54 +59,18 @@ function URL_GET_USER(email, password) {
     return URL_BASE() + "user/" + email + "/" + password;
 }
 
-$("#login").click(function() {
-    if ($.trim($("#email").val()) == "" || $.trim($("#password").val()) == "") {
-        if ($.trim($("#email").val()) == "" && $.trim($("#password").val()) == "") {
-            alert("Por favor ingrese el correo y la contraseña");
-        } else if ($.trim($("#email").val()) == "") {
-            alert("Por favor ingrese el correo");
-        } else if ($.trim($("#password").val()) == "") {
-            alert("Por favor ingrese la contraseña");
-        }
-    } else if (email_validation() == true) {
-        let datos = {
-            email: $("#email").val(),
-            password: $("#password").val()
-        }
-        $.ajax({
-            url: "http://localhost:8080/api/user/" + datos.email + "/" + datos.password,
-            method: "GET",
-            dataType: "json",
-            success: function(response) {
-                if (response.password == null) {
-                    alert("Los datos ingresados no existen en la base de datos, recuerda realizar el registro")
-                } else if (response.password == datos.password) {
-                    alert("Contraseña Incorrecta")
-                } else {
-                    console.log(response);
-                    window.location.href = "../index.html";
-                }
-            },
-            error: function(xhr, status) {
-                console.log(xhr);
-                console.log(status);
-            }
-        });
-    }
-});
 
 function get_ID() {
     $.ajax({
-        url: "http://localhost:8080/api/user/newid",
+        url: "http://localhost:8080/api/clone/newid",
         method: "GET",
         dataType: "JSON",
         //function(json) - funcion anonima
         success: function(response) {
-            //window.location.href = "../html/usuarios.html";
             idNuevo = response;
         },
         error: function(xhr, status) {
-            alert('Ha sucedido un problema, Vuelva a iniciar ' + xhr.status);
+            alert('Ha sucedido un problema, Vuelva a intentarlo más tarde ' + xhr.status);
         }
     });
 }
@@ -118,17 +84,19 @@ $("#guardar").click(function() {
         if ($("#contrasenaRegistro").val() == $("#contrasenaRegistro2").val()) {
             let datos = {
                 id: idNuevo,
-                email: $("#emailRegistro").val(),
-                password: $("#contrasenaRegistro").val(),
-                name: $("#usuarioRegistro").val(),
-                identification: $("#identificacion").val(),
-                address: $("#direccion").val(),
-                cellPhone: $("#celular").val(),
-                zone: $("#zona").val(),
-                type: $("#tipo").val()
+                brand: $("#brandR").val(),
+                procesor: $("#procesorR").val(),
+                os: $("#osR").val(),
+                description: $("#descriptionR").val(),
+                memory: $("#memoryR").val(),
+                hardDrive: $("#hardDriveR").val(),
+                availability: $("#availabilityR").val(),
+                price: $("#priceR").val(),
+                quantity: $("#quantityR").val(),
+                photography: $("#photographyR").val()
             }
             $.ajax({
-                url: "http://localhost:8080/api/user/new",
+                url: "http://localhost:8080/api/clone/new",
                 method: "POST",
                 dataType: "JSON",
                 data: JSON.stringify(datos),
@@ -151,7 +119,7 @@ $("#guardar").click(function() {
 
 function consultar() {
     $.ajax({
-        url: 'http://localhost:8080/api/user/all',
+        url: 'http://localhost:8080/api/clone/all',
         type: 'GET',
         dataType: 'JSON',
         //function(json) - funcion anonima
@@ -160,14 +128,15 @@ function consultar() {
             $("#resultado").empty();
             for (i = 0; i < respuesta.length; i++) {
                 $("#resultado").append("<tr>");
-                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].identification + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
-                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].name + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
-                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].email + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
-                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].password + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
-                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].address + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
-                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].cellPhone + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
-                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].zone + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
-                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].type + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].brand + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].procesor + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].os + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].description + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].memory + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].hardDrive + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].availability + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].price + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
+                $("#resultado").append("<td>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + respuesta[i].photography + "&nbsp;&nbsp;&nbsp;&nbsp;" + "</td>");
                 $("#resultado").append('<td><button type="button" onclick="eliminar(' + respuesta[i].id + ')" class="btn btn-danger btn-block">BORRAR</button><button type="button" onclick="editmodal(' + respuesta[i].id + ')" class="btn btn-success btn-block">EDITAR</button></td>');
                 $("#resultado").append("</tr>")
             };
@@ -189,14 +158,12 @@ function eliminar(id) {
     }
     let dataToSend = JSON.stringify(myData)
     $.ajax({
-        url: "http://localhost:8080/api//user/" + id,
+        url: "http://localhost:8080/api/clone/" + id,
         type: 'DELETE',
         datatype: "JSON",
         success: function(repuesta) {
             $("#resultado").empty();
             consultar();
-            console.log(json);
-            console.log("idClient", dataToSend)
             debugger
         },
         error: function(xhr, status) {
@@ -220,14 +187,16 @@ function editar() {
     let idEditar = this.idUser;
     let myData = {
         id: idEditar,
-        email: $("#emailRegistro").val(),
-        password: $("#contrasenaRegistro").val(),
-        name: $("#usuarioRegistro").val(),
-        identification: $("#identificacion").val(),
-        address: $("#direccion").val(),
-        cellPhone: $("#celular").val(),
-        zone: $("#zona").val(),
-        type: $("#tipo").val()
+        brand: $("#brandR").val(),
+        procesor: $("#procesorR").val(),
+        os: $("#osR").val(),
+        description: $("#descriptionR").val(),
+        memory: $("#memoryR").val(),
+        hardDrive: $("#hardDriveR").val(),
+        availability: $("#availabilityR").val(),
+        price: $("#priceR").val(),
+        quantity: $("#quantityR").val(),
+        photography: $("#photographyR").val()
     }
     let dataTosend = JSON.stringify(myData);
     if (campos == false) {
@@ -236,22 +205,24 @@ function editar() {
         if ($("#contrasenaRegistro").val() == $("#contrasenaRegistro2").val()) {
             $('#exampleModal').modal('hide');
             $.ajax({
-                url: "http://localhost:8080/api/user/update",
+                url: "http://localhost:8080/api/clone/update",
                 type: "PUT",
                 data: dataTosend,
                 contentType: "application/JSON",
                 dataType: 'JSON',
                 success: function(respuesta) {
                     $("#resultado").empty();
-                    $("#idClient").val("");
-                    $("#emailRegistro").val("");
-                    $("#contrasenaRegistro").val("");
-                    $("#usuarioRegistro").val("");
-                    $("#identificacion").val("");
-                    $("#direccion").val("");
-                    $("#celular").val("");
-                    $("#zona").val("");
-                    $("#tipo").val("");
+                    $("#brandR").val("");
+                    $("#procesorR").val("");
+                    $("#osR").val("");
+                    $("#descriptionR").val("");
+                    $("#memoryR").val("");
+                    $("#hardDriveR").val("");
+                    $("#availabilityR").val("");
+                    $("#priceR").val("");
+                    $("#quantityR").val("");
+                    $("#photographyR").val("");
+                    console.log("update", respuesta)
                     consultar();
                 },
                 error: function(xhr, status) {
