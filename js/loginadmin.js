@@ -60,8 +60,10 @@ $("#login").click(function() {
                 } else if (response.password == datos.password) {
                     alert("Contraseña Incorrecta")
                 } else {
-                    console.log(response);
-                    window.location.href = "../index.html";
+                    if (response.type == "ADM") {
+                        console.log(response);
+                        window.location.href = "administrador.html";
+                    }
                 }
             },
             error: function(xhr, status) {
@@ -69,42 +71,5 @@ $("#login").click(function() {
                 console.log(status);
             }
         });
-    }
-});
-
-$("#guardar").click(function() {
-    if ($.trim($("#emailRegistro").val()) == "" || $.trim($("#usuarioRegistro").val()) == "" || $.trim($("#contrasenaRegistro").val()) == "" || $.trim($("#contrasenaRegistro2").val()) == "") {
-        alert("Por favor ingrese todos los campos");
-    } else {
-        if ($("#contrasenaRegistro").val() == $("#contrasenaRegistro2").val()) {
-            let datos = {
-                email: $("#emailRegistro").val(),
-                password: $("#contrasenaRegistro").val(),
-                name: $("#usuarioRegistro").val(),
-                identification: $("#identificacion").val(),
-                address: $("#direccion").val(),
-                cellPhone: $("#celular").val(),
-                zone: $("#zona").val(),
-                type: $("#tipo").val()
-            }
-            $.ajax({
-                url: "http://localhost:8080/api/user/new",
-                method: "POST",
-                dataType: "JSON",
-                data: JSON.stringify(datos),
-                contentType: "application/json",
-                Headers: {
-                    "Content-Type": "application/json"
-                },
-                statusCode: {
-                    201: function(response) {
-                        //window.location.href = "../html/usuarios.html";
-                        console.log(response);
-                    }
-                }
-            });
-        } else {
-            alert("Las contraseñas no coinciden");
-        }
     }
 });
